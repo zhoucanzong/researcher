@@ -1,0 +1,15 @@
+topic: "研究主题"
+papers:
+  - title: "论文标题示例"
+    authors: "作者列表"
+    year: 2024
+    venue: "NeurIPS"
+    url: "https://arxiv.org/abs/xxxx.xxxxx"
+    significance: "为什么这篇论文重要"
+  # 继续添加论文...
+
+execution:
+  batch_size: 3          # 每批并行 agent 数量
+  papers_per_agent: 1    # 每个 agent 同时阅读的论文数（1=深度，>1=快速扫描）
+  output_dir: "./papers" # JSON 结果输出目录
+  resume: true           # 是否断点续传（跳过已完成的 JSON）

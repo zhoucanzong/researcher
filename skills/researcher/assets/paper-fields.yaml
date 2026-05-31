@@ -1,0 +1,94 @@
+categories:
+  基本信息:
+    - title: 论文标题
+      description: 完整论文标题
+      detail_level: 极简
+    - authors: 作者
+      description: 作者列表（含第一作者和通讯作者标记）
+      detail_level: 极简
+    - year: 发表年份
+      description: 论文发表年份
+      detail_level: 极简
+    - venue: 发表会议/期刊
+      description: 会议或期刊名称及级别
+      detail_level: 极简
+    - url: 论文链接
+      description: 可直接访问的论文 URL
+      detail_level: 极简
+    - citations: 引用次数
+      description: Google Scholar 等平台的引用数
+      detail_level: 极简
+
+  内容摘要:
+    - abstract: 摘要
+      description: 论文摘要的中文翻译或概括
+      detail_level: 简要
+    - keywords: 关键词
+      description: 论文关键词/标签
+      detail_level: 极简
+    - tl_dr: 一句话总结
+      description: 用一句话概括论文核心贡献
+      detail_level: 极简
+
+  研究背景:
+    - problem: 研究问题
+      description: 论文试图解决的核心问题
+      detail_level: 详细
+    - motivation: 研究动机
+      description: 为什么这个问题重要
+      detail_level: 详细
+    - related_work: 相关工作及局限
+      description: 与本文最相关的已有工作及其局限性
+      detail_level: 简要
+
+  核心方法:
+    - method_overview: 方法概述
+      description: 方法的整体思路和关键步骤
+      detail_level: 详细
+    - key_technique: 关键技术细节
+      description: 技术细节、模型架构、算法流程
+      detail_level: 详细
+    - innovations: 创新点
+      description: 相比已有工作的创新之处
+      detail_level: 详细
+
+  实验与结果:
+    - datasets: 实验数据集
+      description: 使用的数据集名称和规模
+      detail_level: 简要
+    - baselines: 对比基线
+      description: 与哪些方法进行了对比
+      detail_level: 简要
+    - main_results: 主要实验结果
+      description: 核心性能指标和对比结果（含关键数字）
+      detail_level: 详细
+    - ablation: 消融实验发现
+      description: 消融实验设计及关键发现
+      detail_level: 简要
+
+  分析与讨论:
+    - contributions: 主要贡献
+      description: 论文的主要贡献列表
+      detail_level: 详细
+    - limitations: 局限性
+      description: 论文自己指出的局限性
+      detail_level: 详细
+    - future_work: 未来工作方向
+      description: 论文提到的未来研究方向
+      detail_level: 简要
+
+  个人评价:
+    - relevance: 相关度评分
+      description: 与调研主题的相关程度（1-10 分）
+      detail_level: 极简
+    - quality: 论文质量评分
+      description: 整体质量评估（1-10 分）
+      detail_level: 极简
+    - insights: 个人启发
+      description: 阅读后的思考、启发或疑问
+      detail_level: 详细
+
+detail_levels:
+  极简: 1-2 句话概括
+  简要: 3-5 句话说明
+  详细: 完整段落描述，包含关键细节
