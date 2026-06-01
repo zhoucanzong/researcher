@@ -107,6 +107,54 @@ research/{topic-slug}/           # 深度模式才创建此目录
 
 **默认模式**（`/researcher`）只生成 `report.md` 到 `/mnt/agents/output/`，不创建研究目录。
 
+## HTML 展示（可选附加操作）
+
+报告生成后，询问用户是否需要 HTML 版本：
+
+> "报告已生成。需要导出为精美的 HTML 文件吗？（直接回车=跳过）"
+
+若用户确认（输入 `y` / `yes` / `html` 或类似），直接使用 `Write` 工具将报告内容输出为 `.html` 文件。不要调用外部脚本，模型自己生成完整的 HTML。
+
+### HTML 设计规范
+
+输出一个独立的、内嵌样式的 HTML5 文件，遵循以下设计系统：
+
+**配色（暖色陶土主题）**
+- 背景：`#faf8f5`（浅色）/ `#1c1a18`（深色）
+- 文字：`#2c2825`（浅色主文字）/ `#e8e2dc`（深色主文字）
+- 强调色：`#c45c3e`（陶土橙，用于标题下划线、左边框、链接）
+- 辅助色：`#6b6560`（次要文字）
+- 边框：`#e8e0d6`（浅色）/ `#3a3632`（深色）
+
+**排版**
+- 正文字体：系统字体栈（`-apple-system, "Segoe UI", "Noto Sans SC", sans-serif`）
+- 代码字体：等宽字体栈（`"SF Mono", "Fira Code", "Sarasa Mono SC", monospace`）
+- 正文大小：16px，行高 1.75
+- h1：2.2rem，底部 2px 实线强调色边框
+- h2：1.55rem，左侧 4px 实线强调色边框，左内边距 16px
+- h3：1.2rem，正常字重 600
+- 容器最大宽度：820px，居中
+
+**组件样式**
+- 引用块：左侧 4px 强调色边框，`#f7f3ed` 背景，圆角右侧
+- 代码块：`#f5f0e8` 背景，圆角 12px，内边距 20px 24px
+- 行内代码：`#f0ebe3` 背景，强调色文字
+- 表格：表头 `#f5f0e8` 背景，圆角 8px，hover 高亮
+- 链接：强调色，hover 下划线
+- 任务列表复选框：使用 `accent-color` 匹配强调色
+
+**深色模式**
+- 使用 `@media (prefers-color-scheme: dark)` 定义深色变量
+- 所有颜色变量都有对应的深色版本
+
+**要求**
+- 所有 CSS 内嵌在 `<style>` 标签中，不引用外部文件
+- 完整 HTML5 文档结构（DOCTYPE、html、head、body）
+- 适配移动端（`max-width: 640px` 调整字号和间距）
+- 使用语义化标签：`<article>`、`<header>`、`<section>` 等
+- 将 Markdown 内容转换为对应 HTML 标签（表格用 `<table>`，代码块用 `<pre><code>` 等）
+- 输出路径与报告同级，如 `report.md` → `report.html`
+
 ## 核心原则
 
 1. **默认极简**：`/researcher` 直接给结果，不问一堆问题

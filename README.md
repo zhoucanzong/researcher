@@ -41,6 +41,7 @@
 | 🧠 知识图谱 | Zettelkasten 风格的概念关联网络 |
 | 🖼️ 多模态处理 | 自动路由处理 PDF、Word、图片、网页等多种输入 |
 | 👨‍🏫 概念教学 | 苏格拉底式提问，难度自适应的概念讲解 |
+| 🌐 HTML 展示 | 将 Markdown 报告转换为精美的 HTML 文件，自适应深色/浅色模式 |
 
 | Feature | Description |
 |---------|-------------|
@@ -50,6 +51,7 @@
 | 🧠 Knowledge Graph | Zettelkasten-style concept linkage networks |
 | 🖼️ Multimodal | Auto-routing for PDF, Word, images, web pages, etc. |
 | 👨‍🏫 Concept Teaching | Socratic questioning with adaptive difficulty |
+| 🌐 HTML Export | Convert Markdown reports to polished HTML with dark/light mode |
 
 ---
 
@@ -170,6 +172,17 @@ python skills/researcher/scripts/update_knowledge_graph.py ./my-research
 python skills/researcher/scripts/teach_concept.py \
   ./my-research "Attention Mechanism" intermediate
 ```
+
+### 5. HTML 导出 | HTML Export
+
+报告生成后，模型会询问是否需要 HTML 版本。确认后，模型直接使用 `Write` 工具输出完整的 `.html` 文件。
+
+HTML 设计特点：
+- 独立的内嵌样式 HTML5 文件，不依赖外部资源
+- 暖色陶土主题（`#c45c3e` 强调色），自适应深色/浅色模式
+- 精美排版：标题下划线/左边框装饰、引用块、代码块、表格等
+- 响应式设计，支持移动端
+- 语义化标签（`article`、`header`、`section` 等）
 
 ---
 
