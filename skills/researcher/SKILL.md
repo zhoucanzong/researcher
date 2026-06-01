@@ -1,22 +1,29 @@
 ---
-name: researcher
-description: >
-  学术论文调研与阅读。一句话：输入主题，输出报告。触发词：调研/综述/文献/论文/帮我调研/读这篇/解释一下/什么是/读懂/快速了解。
+description: 学术论文调研与阅读。输入主题，输出报告。
+argument-hint: <主题> 或 deep <主题> 或 teach <概念>
+allowed-tools: [Read, Write, Edit, Bash, WebSearch, WebFetch]
 ---
 
 # Researcher - 论文调研
 
 > 一句话：输入主题，输出报告。
 
-## 命令
+用户输入：`$ARGUMENTS`
 
-| 命令 | 功能 | 适合场景 |
+**参数解析规则**：
+- 无子命令（如 `/researcher RAG最新进展`）→ 默认快速调研
+- 以 `deep` 开头（如 `/researcher deep RAG`）→ 深度调研模式
+- 以 `teach` 开头（如 `/researcher teach 注意力机制`）→ 概念教学模式
+
+## 使用方式
+
+| 用法 | 功能 | 适合场景 |
 |------|------|----------|
-| `/researcher 主题` | 调研主题 → 输出报告 | 多数情况用这个 |
-| `/researcher-deep 主题` | 深度调研（搜索+阅读+详细报告） | 写论文、做综述 |
-| `/researcher-teach 概念` | 讲解概念 | 不懂的地方问这个 |
+| `/researcher <主题>` | 快速调研 → 输出报告 | 多数情况 |
+| `/researcher deep <主题>` | 深度调研（搜索+阅读+详细报告） | 写论文、做综述 |
+| `/researcher teach <概念>` | 讲解概念 | 不懂的地方 |
 
-## 默认路径（/researcher 主题）
+## 默认路径（`/researcher <主题>`）
 
 **目标**：用户输入主题，直接给结果，不废话。
 
@@ -43,7 +50,7 @@ description: >
 - 不教学讲解
 - 不多模态文件处理
 
-## 深度路径（/researcher-deep 主题）
+## 深度路径（`/researcher deep <主题>`）
 
 **采访模式**（3个问题，每个可直接跳过）：
 
@@ -64,11 +71,11 @@ description: >
 | 🖼️ 多模态处理 | 处理用户上传的PDF/图片 | 视文件数 |
 | 👨‍🏫 概念教学 | 对关键概念进行讲解 | +5min/概念 |
 
-引文网络分析详情见 `references/citation-network.md`。
+引文网络分析详情见 `skills/researcher/references/citation-network.md`。
 
 **流程**：
 ```
-用户：/researcher-deep RAG
+用户：/researcher deep RAG
 → Q1: 时间范围？（用户回车=不限）
 → Q2: 勾选高级功能（用户只勾"逐篇阅读+对比表格"）
 → Q3: 详细程度？（用户回车=标准）
@@ -76,12 +83,12 @@ description: >
 → 输出 report.md
 ```
 
-## 教学路径（/researcher-teach 概念）
+## 教学路径（`/researcher teach <概念>`）
 
 直接讲解，不调研。
 
 ```
-用户：/researcher-teach 什么是注意力机制
+用户：/researcher teach 注意力机制
 → 问：背景水平？（初级/中级/高级/回车=自动判断）
 → 苏格拉底式讲解
 → 生成概念卡片 → 可选保存到知识图谱
@@ -98,12 +105,12 @@ research/{topic-slug}/           # 深度模式才创建此目录
   image-descriptions/            # 图片分析（可选）
 ```
 
-**默认模式**（/researcher）只生成 `report.md` 到 `/mnt/agents/output/`，不创建研究目录。
+**默认模式**（`/researcher`）只生成 `report.md` 到 `/mnt/agents/output/`，不创建研究目录。
 
 ## 核心原则
 
 1. **默认极简**：`/researcher` 直接给结果，不问一堆问题
-2. **深度可选**：`/researcher-deep` 才展开高级功能菜单
+2. **深度可选**：`deep` 才展开高级功能菜单
 3. **按需付费**：每个子功能独立开关，用户只选需要的
 4. **可跳过**：所有问题都有默认值，回车即跳过
 5. **一次打断**：默认路径最多打断1次，深度路径最多3次
