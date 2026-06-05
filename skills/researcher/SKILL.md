@@ -1,4 +1,5 @@
 ---
+name: researcher
 description: 学术论文调研与阅读。输入主题，输出报告。
 argument-hint: <主题> 或 deep <主题> 或 teach <概念>
 allowed-tools: [Read, Write, Edit, Bash, WebSearch, WebFetch]
