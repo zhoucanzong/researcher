@@ -9,9 +9,18 @@
 *Input a topic, get a report. Supports deep research, citation network analysis, multimodal processing, and concept teaching.*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 </div>
+
+> **这是一个 Agent Skill，不是 Python 程序。**
+>
+> 打开你正在用的 agent（Claude Code、Codex、Cursor、OpenClaw、Hermes、CodeBuddy、Workbuddy、Gemini CLI、OpenCode 等），告诉它：
+>
+> ```
+> 帮我安装这个 skill：git@github.com:zhoucanzong/researcher.git
+> ```
+>
+> 它会自己帮你 clone 并配置好，不需要 `pip install`。
 
 ---
 
@@ -19,8 +28,7 @@
 
 - [功能特性 | Features](#功能特性--features)
 - [项目结构 | Project Structure](#项目结构--project-structure)
-- [快速开始 | Quick Start](#快速开始--quick-start)
-- [使用说明 | Usage](#使用说明--usage)
+- [使用方式 | Usage](#使用方式--usage)
 - [贡献指南 | Contributing](#贡献指南--contributing)
 - [许可证 | License](#许可证--license)
 
@@ -28,11 +36,14 @@
 
 ## 功能特性 | Features
 
-### 调研模式 | Research Mode
+### 调研模式 | Research Modes
+
 - **快速调研 (`/researcher`)**：输入主题，直接输出结构化报告，最少交互。
-- **深度调研 (`/researcher-deep`)**：可配置的高级功能菜单，包括逐篇深度阅读、引文网络分析、对比表格、知识图谱等。
+- **深度调研 (`/researcher deep`)**：可配置的高级功能菜单，包括逐篇深度阅读、引文网络分析、对比表格、知识图谱等。
+- **概念教学 (`/researcher teach`)**：苏格拉底式提问，难度自适应的概念讲解。
 
 ### 核心功能 | Core Capabilities
+
 | 功能 | 说明 |
 |------|------|
 | 📄 逐篇深度阅读 | 结构化提取每篇论文的方法、实验与创新点 |
@@ -61,14 +72,14 @@
 researcher/
 ├── LICENSE                          # MIT License
 ├── README.md                        # 本文件 | This file
-├── requirements.txt                 # Python dependencies
+├── requirements.txt                 # Python dependencies (agent auto-installs)
 ├── .gitignore                       # Git ignore rules
 └── skills/
     └── researcher/                  # Skill content
         ├── SKILL.md                 # Skill definition & commands
         ├── assets/                  # Templates & configs
-        │   ├── paper-fields.yaml    # Structured reading field definitions
-        │   ├── paper-outline.yaml   # Research plan template
+        │   ├── paper-fields.yaml
+        │   ├── paper-outline.yaml
         │   └── paper-synthesis-table.md
         ├── references/              # Methodology references
         │   ├── citation-network.md
@@ -77,7 +88,7 @@ researcher/
         │   ├── plan-template.md
         │   ├── report-generation.md
         │   └── teaching-methodology.md
-        └── scripts/                 # CLI tools
+        └── scripts/                 # CLI tools (agent auto-calls)
             ├── extract_multimodal.py
             ├── generate_paper_report.py
             ├── teach_concept.py
@@ -87,102 +98,67 @@ researcher/
 
 ---
 
-## 快速开始 | Quick Start
+## 使用方式 | Usage
 
-### 环境要求 | Requirements
+安装后，直接在 agent 中使用：
 
-- Python 3.8+
-- PyYAML
+| 用法 | 功能 | 适合场景 |
+|------|------|----------|
+| `/researcher <主题>` | 快速调研 → 输出报告 | 多数情况 |
+| `/researcher deep <主题>` | 深度调研（搜索+阅读+详细报告） | 写论文、做综述 |
+| `/researcher teach <概念>` | 讲解概念 | 不懂的地方 |
 
-### 安装 | Installation
+示例：
 
-```bash
-# 克隆仓库 | Clone the repo
-git clone <repo-url>
-cd researcher
-
-# 安装依赖 | Install dependencies
-pip install -r requirements.txt
+```
+/researcher RAG最新进展
+/researcher deep LLM Reasoning
+/researcher teach Attention Mechanism
 ```
 
-### 第一步：准备研究计划 | Step 1: Prepare a Research Plan
+### 深度调研流程
 
-复制模板并编辑你的论文列表：
+深度模式会通过简单的问答引导你配置：
 
-```bash
-cp skills/researcher/assets/paper-outline.yaml my-research.yaml
-# 编辑 my-research.yaml，填入你的主题和论文列表
-```
+1. 时间范围偏好？（默认不限）
+2. 需要哪些高级功能？（逐篇阅读、引文网络、对比表格、知识图谱等，可多选）
+3. 详细程度？（简要/标准/详细，默认标准）
 
-### 第二步：生成报告 | Step 2: Generate Report
+所有问题都有默认值，直接回车即可跳过。
 
-```bash
-# 生成文献综述报告
-python skills/researcher/scripts/generate_paper_report.py \
-  my-research.yaml \
-  skills/researcher/assets/paper-fields.yaml \
-  ./papers \
-  time 标准
-```
+### HTML 导出
+
+报告生成后，agent 会询问是否需要 HTML 版本。确认后自动输出精美的独立 HTML 文件（暖色陶土主题，自适应深色/浅色模式，响应式设计）。
 
 ---
 
-## 使用说明 | Usage
+<details>
+<summary>高级：手动脚本 / Advanced: Manual Script Usage</summary>
 
-### 1. 多模态输入处理 | Multimodal Input Processing
+### 环境要求
 
-处理 PDF、图片、Word 等文件，统一提取为 Markdown：
+Python 3.8+, PyYAML。
 
-```bash
-# 处理单个文件
-python skills/researcher/scripts/extract_multimodal.py process \
-  ./my-research ./paper.pdf
-
-# 批量处理目录
-python skills/researcher/scripts/extract_multimodal.py batch \
-  ./my-research ./inputs/
-
-# 查看支持的格式
-python skills/researcher/scripts/extract_multimodal.py formats
-```
-
-### 2. 论文 JSON 验证 | Paper JSON Validation
-
-验证论文阅读结果是否符合字段规范：
+### 手动使用
 
 ```bash
-python skills/researcher/scripts/validate_paper_json.py \
-  -f skills/researcher/assets/paper-fields.yaml \
-  -j papers/my-paper.json
-```
+# 1. 多模态输入处理
+python skills/researcher/scripts/extract_multimodal.py process ./my-research ./paper.pdf
 
-### 3. 知识图谱更新 | Knowledge Graph Update
+# 2. 生成文献综述报告
+python skills/researcher/scripts/generate_paper_report.py my-research.yaml paper-fields.yaml ./papers time 标准
 
-从论文阅读结果中提取概念，构建 Zettelkasten 风格的知识图谱：
+# 3. 验证论文 JSON
+python skills/researcher/scripts/validate_paper_json.py -f paper-fields.yaml -j papers/my-paper.json
 
-```bash
+# 4. 更新知识图谱
 python skills/researcher/scripts/update_knowledge_graph.py ./my-research
+
+# 5. 概念教学卡片
+python skills/researcher/scripts/teach_concept.py ./my-research "Attention Mechanism" intermediate
 ```
 
-### 4. 概念教学卡片 | Concept Teaching Card
-
-为某个概念生成教学卡片并追加到知识图谱：
-
-```bash
-python skills/researcher/scripts/teach_concept.py \
-  ./my-research "Attention Mechanism" intermediate
-```
-
-### 5. HTML 导出 | HTML Export
-
-报告生成后，模型会询问是否需要 HTML 版本。确认后，模型直接使用 `Write` 工具输出完整的 `.html` 文件。
-
-HTML 设计特点：
-- 独立的内嵌样式 HTML5 文件，不依赖外部资源
-- 暖色陶土主题（`#c45c3e` 强调色），自适应深色/浅色模式
-- 精美排版：标题下划线/左边框装饰、引用块、代码块、表格等
-- 响应式设计，支持移动端
-- 语义化标签（`article`、`header`、`section` 等）
+</details>
 
 ---
 
@@ -197,12 +173,6 @@ HTML 设计特点：
 5. 打开一个 Pull Request
 
 Issues and PRs are welcome!
-
-1. Fork the repo
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ---
 
